@@ -24,7 +24,7 @@ pub fn configure(b: *Build, target: Build.ResolvedTarget, optimize: std.builtin.
     // Compile minilua interpreter used at build time to generate files
     const minilua = b.addExecutable(.{
         .name = "minilua",
-        .target = target, // TODO ensure this is the host
+        .target = b.graph.host,
         .optimize = .ReleaseSafe,
     });
     minilua.linkLibC();
@@ -75,7 +75,7 @@ pub fn configure(b: *Build, target: Build.ResolvedTarget, optimize: std.builtin.
     // Compile the buildvm executable used to generate other files
     const buildvm = b.addExecutable(.{
         .name = "buildvm",
-        .target = target, // TODO ensure this is the host
+        .target = b.graph.host,
         .optimize = .ReleaseSafe,
     });
     buildvm.linkLibC();
