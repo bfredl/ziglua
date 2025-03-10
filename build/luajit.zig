@@ -42,6 +42,11 @@ pub fn configure(b: *Build, target: Build.ResolvedTarget, optimize: std.builtin.
         dynasm_run.addArgs(&.{ "-D", "ENDIAN_BE" });
     }
 
+    if (target.result.cpu.arch.isArm() or target.result.cpu.arch.isAARCH64()) {
+        std.debug.print("foooka\n", .{});
+        dynasm_run.addArgs(&.{ "-D", "DUALNUM" });
+    }
+
     if (target.result.ptrBitWidth() == 64) dynasm_run.addArgs(&.{ "-D", "P64" });
     dynasm_run.addArgs(&.{ "-D", "JIT", "-D", "FFI" });
 
